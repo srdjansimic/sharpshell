@@ -37,7 +37,11 @@ namespace CreateDateFolder
             var contextMenu = new ContextMenuStrip();
 
             //  Add the 'copy path' item. This just copies the folder path for the extension.
-            var menuItem = new ToolStripMenuItem("Create Date Folder");
+            var menuItem = new ToolStripMenuItem
+                                {
+                                    Text = @"Create Date Folder",
+                                    Image = Properties.Resources.Add_Folder_icon
+                                };
 
             // Ovo kopira folder u Clipboard
             //menuItem.Click += (sender, args) => Clipboard.SetText(FolderPath);
