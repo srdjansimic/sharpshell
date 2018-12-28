@@ -1,8 +1,5 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace WorkApp
 {
@@ -13,21 +10,28 @@ namespace WorkApp
             // The code provided will print ‘Hello World’ to the console.
             // Press Ctrl+F5 (or go to Debug > Start Without Debugging) to run your app.
             Console.WriteLine("Hello World!");
-            CreateFolder();
+
+            const string currentFolder = @"C:\Source\Razno\sharpshell\Tests\TestData\ContextMenus";
+            var currentDate = GetCurrentDate();
+            string pathString = System.IO.Path.Combine(currentFolder, currentDate);
+
+            CreateFolder(pathString);
+
+            Console.WriteLine("Press any key...");
             Console.ReadKey();
 
             // Go to http://aka.ms/dotnet-get-started-console to continue learning how to build a console app! 
         }
 
-        private static void CreateFolder()
+        private static string GetCurrentDate()
         {
-            // Specify a name for your top-level folder.
-            string folderName = @"C:\Source\Razno\sharpshell\Tests\TestData\ContextMenus";
+            var currentDate = DateTime.Today;
+            return currentDate.ToString("yyyy-MM-dd");
+        }
 
-            // To create a string that specifies the path to a subfolder under your 
-            // top-level folder, add a name for the subfolder to folderName.
-            string pathString = System.IO.Path.Combine(folderName, "Test Folder");
 
+        private static void CreateFolder(string pathString)
+        {
             try
             {
                 System.IO.Directory.CreateDirectory(pathString);
@@ -36,7 +40,7 @@ namespace WorkApp
             catch (Exception exception)
             {
                 var builder = new StringBuilder();
-                builder.AppendLine($"Greska prilikom kreiranja foldera {folderName}: {exception.Message}");
+                builder.AppendLine($"Greska prilikom kreiranja foldera {pathString}: {exception.Message}");
             }
         }
     }

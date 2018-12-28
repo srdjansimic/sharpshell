@@ -1,7 +1,9 @@
 ﻿using SharpShell.Attributes;
-using System.Runtime.InteropServices;
-using System.Windows.Forms;
 using SharpShell.SharpContextMenu;
+using System;
+using System.Runtime.InteropServices;
+using System.Text;
+using System.Windows.Forms;
 
 namespace CreateDateFolder
 {
@@ -46,9 +48,34 @@ namespace CreateDateFolder
             return contextMenu;
         }
 
+        private string GetCurrentDate()
+        {
+            var currentDate = DateTime.Today;
+            return currentDate.ToString("yyyy-MM-dd");
+        }
+
+
         private void CreateFolder()
         {
-            Clipboard.SetText(FolderPath);
+            var currentDate = GetCurrentDate();
+            var currentPath = "";
+            if (FolderPath != null)
+            {
+                currentPath = FolderPath;
+            }
+
+            var pathString = System.IO.Path.Combine(currentPath, currentDate);
+            Clipboard.SetText(pathString);
+
+            try
+            {
+                System.IO.Directory.CreateDirectory(pathString);
+            }
+            catch (Exception exception)
+            {
+                var builder = new StringBuilder();
+                builder.AppendLine($"Greska prilikom kreiranja foldera {pathString}: {exception.Message}");
+            }
         }
     }
 }
