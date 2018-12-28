@@ -1,16 +1,16 @@
 ﻿using SharpShell.Attributes;
-using SharpShell.SharpContextMenu;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using SharpShell.SharpContextMenu;
 
-namespace CopyDirectoryLocationHandler
+namespace CreateDateFolder
 {
     /// <summary>
-    /// This extension adds the 'Copy location' command to the background of folders.
+    /// This extension adds the 'Create Data Folder' command to the background of folders.
     /// </summary>
     [ComVisible(true)]
     [COMServerAssociation(AssociationType.Class, @"Directory\Background")]
-    public class CopyDirectoryLocationHandler : SharpContextMenu
+    public class CreateDateFolderExtension : SharpContextMenu
     {
         /// <summary>
         /// Determines whether this instance can a shell context show menu, given the specified selected file list.
@@ -35,12 +35,20 @@ namespace CopyDirectoryLocationHandler
             var contextMenu = new ContextMenuStrip();
 
             //  Add the 'copy path' item. This just copies the folder path for the extension.
-            var menuItem = new ToolStripMenuItem("Copy Location");
-            menuItem.Click += (sender, args) => Clipboard.SetText(FolderPath);
+            var menuItem = new ToolStripMenuItem("Create Date Folder");
+
+            // Ovo kopira folder u Clipboard
+            //menuItem.Click += (sender, args) => Clipboard.SetText(FolderPath);
+            menuItem.Click += (sender, args) => CreateFolder();
             contextMenu.Items.Add(menuItem);
 
             //  Return the menu.
             return contextMenu;
+        }
+
+        private void CreateFolder()
+        {
+            Clipboard.SetText(FolderPath);
         }
     }
 }
